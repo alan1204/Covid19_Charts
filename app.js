@@ -9,8 +9,9 @@ async function getData() {
     month.toString().padStart(2, "00") +
     "-" +
     d.getDate();
+  console.log(date);
   const response = await fetch(
-    `https://api.covid19api.com/country/mexico?from=2020-02-28T00:00:00Z&to=${date}T00:00:00Z`
+    `https://api.covid19api.com/country/mexico?from=2020-02-28T00:00:00Z&to=${date.toString()}T00:00:00Z`
   );
   const data = await response.json();
   return data;
