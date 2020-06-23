@@ -9,7 +9,7 @@ async function getData() {
     month.toString().padStart(2, "00") +
     "-" +
     d.getDate();
-  console.log(date);
+  //console.log(date);
   const response = await fetch(
     `https://api.covid19api.com/country/mexico?from=2020-02-28T00:00:00Z&to=${date.toString()}T00:00:00Z`
   );
@@ -24,15 +24,44 @@ async function renderData() {
   const Deaths = [];
   const Recovered = [];
 
-  data.forEach((item) => {
-    console.log("Date: " + item.Date);
+  data.forEach(function (item, index) {
+    const newDate = new Date();
+    let month = newDate.getMonth(
+      newDate.setTime(Date.parse(item.Date.toString().substr(0, 10)))
+    );
+
+    /*if (index > 0) {
+      const newPreviousDate = new Date();
+      let previousmonth = newPreviousDate.getMonth(
+        newPreviousDate.setTime(
+          Date.parse(data[index - 1].Date.toString().substr(0, 10))
+        )
+      );
+
+      let totalCases = 0;
+      if (month == previousmonth) {
+        totalCases = totalCases + item.Confirmed;
+      } else {
+      }
+    }*/
+
+    //console.log(previousmonth);
+    //console.log(month);
+    //console.log("Date: " + item.Date);
     dates.push(item.Date.toString().substr(0, 10));
-    console.log("Confirmed: " + item.Confirmed);
+    //console.log("Confirmed: " + item.Confirmed);
     Confirmed.push(item.Confirmed);
-    console.log("Deaths: " + item.Deaths);
+    //console.log("Deaths: " + item.Deaths);
     Deaths.push(item.Deaths);
-    console.log("Recovered: " + item.Recovered);
+    //console.log("Recovered: " + item.Recovered);
     Recovered.push(item.Recovered);
+
+    if (index > 0) {
+      //console.log("Previous: " + data[index - 1].name);
+    }
+    if (index < data.length - 1) {
+      //console.log("Next: " + data[index + 1].name);
+    }
   });
 
   var options = {
